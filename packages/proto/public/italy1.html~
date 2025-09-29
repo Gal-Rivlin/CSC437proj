@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	  <meta charset="UTF-8">
+          <title>Hello Page</title>
+</head>
+<body>
+  <h1>Italy Trip!</h1>
+  <h1>itinirary</h1>
+  <ul>
+	  <li>Day 1 acitivies: (should be a text box here)<br>
+		  <a href="/bookingspage.html">Bookings</a><br>
+		  <a href="/photospage.html">Photos</a><br>
+		  remove day (this doesn't do anything for now)
+	  </li>
+	  <li>Day 2 acitivies: (should be a text box here)<br>
+		  <a href="/bookingspage.html">Bookings</a><br>
+		  <a href="/photospage.html">Photos</a><br>
+		  remove day
+	  </li>
+	  <li>Add a day</li>
+  </ul>
+	  
+  <a href="/index.html"> return to home</a>
+</body>
+</html>
+
