@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create a New Trip</title>
+    <link rel="stylesheet" href="css_files/reset.css" />
+    <link rel="stylesheet" href="css_files/cssforcreate.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Create a new trip</h1>
+      <form
+        onsubmit="event.preventDefault(); window.location.href='index.html';"
+      >
+        <div>
+          <label for="trip-name">Trip name</label>
+          <input type="text" id="trip-name" placeholder="Value" />
+        </div>
+        <div>
+          <label for="duration">Duration in days</label>
+          <input type="text" id="duration" placeholder="Value" />
+        </div>
+        <div>
+          <label for="dates">Dates</label>
+          <input type="text" id="dates" placeholder="Value" />
+        </div>
+        <button type="submit" class="btn">Create Trip</button>
+      </form>
+    </div>
+  </body>
+</html>

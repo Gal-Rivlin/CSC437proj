@@ -1,0 +1,23 @@
+:root {
+  /* 🌿 Backgrounds */
+  --page-bg: #f6f6f6; /* matches your old --bg */
+  --header-bg: #5e4ae3; /* strong accent background (purple) */
+
+  /* 🖋 Text colors */
+  --text-color: #222; /* default text color (ink) */
+  --header-text-color: #ffffff; /* contrasting white text on purple */
+
+  /* ✨ Accent colors */
+  --accent-primary: #5e4ae3; /* links, highlights, buttons */
+  --accent-danger: #e35050; /* warnings, error states */
+  --accent-muted: #666; /* subtle secondary text */
+
+  /* 🧊 UI surfaces */
+  --card-bg: #ffffff;
+  --surface-bg: #e0e0e0;
+
+  /* 🌸 Border radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+}

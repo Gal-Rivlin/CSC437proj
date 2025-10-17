@@ -1,0 +1,165 @@
+:root {
+  --ink: #222;
+  --muted: #666;
+  --bg: #f6f6f6;
+  --card: #ffffff;
+  --surface: #e0e0e0;
+  --primary: #5e4ae3;
+  --danger: #e35050;
+  --radius: 12px;
+  --thumb-min: 96px;
+  --thumb-ideal: 18vw; /* scales with viewport, but… */
+  --thumb-max: 160px;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  margin: 0;
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  margin: 1.25rem auto 1rem;
+}
+.trip-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+.exit-link {
+  text-decoration: none;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+.exit-link:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.home {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+/* Responsive grid */
+.trip-list {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+
+/* Card */
+.trip-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  display: grid;
+  grid-template-columns:
+    clamp(
+      var(--thumb-min) + 120,
+      var(--thumb-ideal) + 120,
+      var(--thumb-max) + 120
+    )
+    minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.thumb {
+  inline-size: clamp(var(--thumb-min), var(--thumb-ideal), var(--thumb-max));
+  block-size: clamp(var(--thumb-min), var(--thumb-ideal), var(--thumb-max));
+  border-radius: 8px;
+  overflow: hidden; /* keeps image inside rounded corners */
+  background: #e9e9e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-row: 1 / span 2;
+}
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill without distortion */
+}
+.trip-title {
+  margin: 0.5rem;
+  font-size: 1rem;
+}
+.actions {
+  grid-column: 2;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.btn {
+  text-decoration: none;
+  background: #eee;
+  color: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+.btn:hover {
+  background: #e7e7e7;
+}
+.btn-ghost-danger {
+  background: #fff;
+  color: var(--danger);
+  border: 1px solid rgba(227, 80, 80, 0.35);
+}
+.btn-ghost-danger:hover {
+  background: rgba(227, 80, 80, 0.08);
+}
+
+/* Big CTA */
+.cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+.cta {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  padding: 1rem 2.5rem;
+  font-size: 2rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(94, 74, 227, 0.25);
+}
+.cta:hover {
+  filter: brightness(1.05);
+}
+
+/* Small tweaks for narrow screens */
+@media (max-width: 520px) {
+  .trip-card {
+    grid-template-columns: 56px 1fr;
+  }
+  .thumb {
+    width: 56px;
+    height: 56px;
+  }
+}
