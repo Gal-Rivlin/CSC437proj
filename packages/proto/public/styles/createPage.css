@@ -1,16 +1,4 @@
-:root {
-  --primary: #6247aa;
-  --bg: #ffffff;
-  --text: #111111;
-  --border: #e0e0e0;
-  --radius: 6px;
-}
-
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -22,16 +10,10 @@ body {
   width: 90%;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-}
-
 form {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid var(--surface-bg);
+  border-radius: var(--radius-sm);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -40,23 +22,15 @@ form {
 
 label {
   font-size: 0.9rem;
-  color: #444;
+  color: var(--text-color);
   display: block;
   margin-bottom: 0.25rem;
 }
 
-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 1rem;
-}
-
 .btn {
   margin-top: 2rem;
-  background: var(--primary);
-  color: white;
+  background: var(--accent-primary);
+  color: var(--card-bg);
   font-size: 1.5rem;
   font-weight: 500;
   padding: 1rem;
@@ -68,7 +42,7 @@ input {
 }
 
 .btn:hover {
-  background: #513a8a;
+  background: var(--accent-primary);
 }
 
 .cta-wrap {
@@ -78,13 +52,13 @@ input {
 }
 .cta {
   display: inline-block;
-  background: var(--primary);
-  color: #fff;
+  background: var(--accent-primary);
+  color: var(--card-bg);
   text-decoration: none;
   padding: 1rem 2.5rem;
   font-size: 2rem;
   border-radius: 999px;
-  box-shadow: 0 6px 18px rgba(94, 74, 227, 0.25);
+  box-shadow: 0 6px 18px var(--surface-bg);
 }
 .cta:hover {
   filter: brightness(1.05);

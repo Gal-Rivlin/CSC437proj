@@ -1,8 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-}
-
 .trip {
   display: grid;
   gap: 1rem;
@@ -13,17 +8,16 @@ body {
   gap: 1rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  background: #e0e0e0;
+  background: var(--surface-bg);
   border-radius: 8px;
   align-items: stretch;
   box-sizing: border-box;
   height: 200px;
-  flex-wrap: nowrap; /* stay on one row */
-  overflow-x: auto; /* enable horizontal scroll */
+  flex-wrap: nowrap;
+  overflow-x: auto;
   overflow-y: hidden;
   box-sizing: border-box;
-  white-space: nowrap; /* 👈 keep text on one line */
-  /* prevents overflowing vertically */
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
@@ -32,18 +26,16 @@ body {
   height: auto;
   padding: 1rem;
   align-self: stretch;
-  background: white;
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 6px;
   min-width: 150px;
 }
-
 .trip-day > button {
   align-self: center;
 }
-
 .photos {
-  min-width: 150px; /* optional — same as flex-basis */
+  min-width: 150px;
   align-self: center;
 }
 
@@ -51,16 +43,10 @@ body {
   font-weight: bold;
 }
 
-.itinerary h4,
-.bookings h4 {
-  margin-top: 0;
-  font-size: 0.9rem;
-}
-
 .add-btn {
   background: none;
-  border: 2px solid #5e4ae3;
-  color: #5e4ae3;
+  border: 2px solid var(--accent-primary);
+  color: var(--accent-primary);
   font-size: 1.5rem;
   border-radius: 50%;
   width: 40px;
@@ -69,8 +55,8 @@ body {
 }
 
 .add-btn:hover {
-  background: #5e4ae3;
-  color: white;
+  background: var(--accent-primary);
+  color: var(--card-bg);
 }
 
 .trip-header {
@@ -78,23 +64,17 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
-  background: #e0e0e0;
+  background: var(--surface-bg);
   border-radius: 8px;
   margin-bottom: 1.5rem;
   box-sizing: border-box;
 }
 
-.trip-header h1 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0;
-}
-
 .exit-link {
   text-decoration: none;
   background: none;
-  border: 2px solid #5e4ae3;
-  color: #5e4ae3;
+  border: 2px solid var(--accent-primary);
+  color: var(--accent-primary);
   font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 6px;
@@ -103,6 +83,6 @@ body {
 }
 
 .exit-link:hover {
-  background: #5e4ae3;
-  color: white;
+  background: var(--accent-primary);
+  color: var(--card-bg);
 }

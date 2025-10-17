@@ -1,0 +1,26 @@
+:root {
+  --page-bg: #f6f6f6;
+  --header-bg: #5e4ae3;
+
+  --text-color: #222;
+  --text-muted: #666;
+  --header-text-color: #ffffff;
+
+  --accent-primary: #5e4ae3;
+  --accent-danger: #e35050;
+  --accent-muted: #666;
+
+  --card-bg: #ffffff;
+  --light-bg: rgba(0, 0, 0, 0.04);
+  --surface-bg: #e0e0e0;
+  --hover-bg: #e7e7e7;
+  --hover-danger: rgba(227, 80, 80, 0.08);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  --thumb-min: 96px;
+  --thumb-ideal: 18vw;
+  --thumb-max: 160px;
+}
