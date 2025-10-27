@@ -4,8 +4,9 @@
   align-items: center;
   padding: 1rem 1.5rem;
   background: var(--surface-bg);
-  border-radius: var(--radius-md);
-  margin: 1.25rem auto 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
 }
 
 .subtitle {
@@ -38,6 +39,7 @@
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  align-items: stretch;
 }
 
 .trip-card {
@@ -57,6 +59,7 @@
   gap: 0.75rem 1rem;
   align-items: center;
   border: 1px solid var(--surface-bg);
+  height: 100%;
 }
 
 .thumb {
@@ -81,6 +84,7 @@
   font-size: 1rem;
 }
 .actions {
+  color: var(--text-color);
   grid-column: 2;
   display: flex;
   gap: 0.5rem;
@@ -135,4 +139,13 @@
     width: 56px;
     height: 56px;
   }
+}
+
+.dark-mode-toggle:hover {
+  background: var(--accent-muted);
+  color: var(--header-text-color);
+}
+
+.dark-mode-toggle {
+  border: 2px solid var(--accent-muted);
 }
