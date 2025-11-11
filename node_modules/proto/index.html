@@ -17,35 +17,33 @@
   </head>
 
   <body>
-    <header class="trip-header">
-      <div class="header-left">
-        <h1>My Trips</h1>
-        <p class="subtitle">Where to, Gal?</p>
-      </div>
-      <label class="dark-mode-toggle">
-        <input type="checkbox" autocomplete="off" />
-        Dark mode
-      </label>
-    </header>
+    <mu-auth provides="traveling:auth">
+      <trip-header></trip-header>
 
-    <main class="home">
-      <trip-list src="./tripData.json"></trip-list>
+      <main class="home">
+        <trip-list src="/api/tripcards/"></trip-list>
 
-      <div class="cta-wrap">
-        <a href="/create.html" class="cta">Create New Trip</a>
-      </div>
-    </main>
+        <div class="cta-wrap">
+          <a href="/create.html" class="cta">Create New Trip</a>
+        </div>
+      </main>
 
-    <script type="module">
-      import { define } from "@calpoly/mustang";
-      import { TripHomeElement } from "/src/tripHomeElement.ts";
-      import { TripHomeListElement } from "/src/tripHomeListElement.ts";
+      <script type="module">
+        import { define, Auth } from "@calpoly/mustang";
+        import { TripHomeElement } from "/src/tripHomeElement.ts";
+        import { TripHomeListElement } from "/src/tripHomeListElement.ts";
+        import { TripHomeHeaderElement } from "/src/tripHomeHeaderElement.ts";
 
-      define({
-        "trip-card": TripHomeElement,
-        "trip-list": TripHomeListElement,
-      });
-    </script>
-    <script src="/scripts/home.js"></script>
+        define({
+          "trip-header": TripHomeHeaderElement,
+          "trip-card": TripHomeElement,
+          "trip-list": TripHomeListElement,
+          "mu-auth": Auth.Provider,
+        });
+
+        TripHomeHeaderElement.initializeOnce();
+      </script>
+      <script src="/scripts/home.js"></script>
+    </mu-auth>
   </body>
 </html>

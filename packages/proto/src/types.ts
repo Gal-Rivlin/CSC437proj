@@ -13,3 +13,7 @@ export interface TripDayData {
   bookings?: string;
   photos?: string;
 }
+
+export interface HeaderData {
+  name?: string;
+}

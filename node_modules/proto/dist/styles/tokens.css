@@ -1,0 +1,57 @@
+:root {
+  --page-bg: #f6f6f6;
+  --header-bg: #5e4ae3;
+
+  --text-color: #222;
+  --text-muted: #666;
+  --header-text-color: #ffffff;
+
+  --accent-primary: #5e4ae3;
+  --accent-danger: #e35050;
+  --accent-muted: #666;
+
+  --card-bg: #ffffff;
+  --light-bg: rgba(0, 0, 0, 0.04);
+  --surface-bg: #e0e0e0;
+  --hover-bg: #e7e7e7;
+  --hover-danger: rgba(227, 80, 80, 0.08);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  --thumb-min: 96px;
+  --thumb-ideal: 18vw;
+  --thumb-max: 160px;
+
+  --light-text: #1a1a1a;
+}
+
+body.dark-mode {
+  --page-bg: #1a1a1a; /* overall page background */
+  --header-bg: #2a2670; /* darker header background */
+
+  --text-color: #f6f6f6; /* primary text is now light */
+  --text-muted: #aaaaaa; /* softer light text */
+  --header-text-color: #ffffff; /* still white for header text */
+
+  --accent-primary: #5e4ae3; /* keep your brand color */
+  --accent-danger: #e35050;
+  --accent-muted: #999999; /* light gray accent */
+
+  --card-bg: #2a2a2a; /* cards slightly lighter than page */
+  --light-bg: rgba(255, 255, 255, 0.05);
+  --surface-bg: #333333; /* surfaces (like headers, list items) */
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --hover-danger: rgba(227, 80, 80, 0.15);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+
+  --thumb-min: 96px;
+  --thumb-ideal: 18vw;
+  --thumb-max: 160px;
+
+  --light-text: #e5e5e5;
+}
