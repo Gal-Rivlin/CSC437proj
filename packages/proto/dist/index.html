@@ -14,22 +14,24 @@
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/page.css" />
     <link rel="stylesheet" href="/styles/homePage.css" />
-    <script type="module" crossorigin src="/assets/main-dTnQJt5M.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/reset.css-Dt-K0X9-.js">
-    <link rel="modulepreload" crossorigin href="/assets/page.css-CYPsM94D.js">
+    <script type="module" crossorigin src="/assets/main-eM4wXcsf.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/reset.css-BESqzo9z.js">
+    <link rel="modulepreload" crossorigin href="/assets/page.css-bvP4R-uf.js">
   </head>
 
   <body>
-    <trip-header></trip-header>
+    <mu-auth provides="traveling:auth">
+      <trip-header></trip-header>
 
-    <main class="home">
-      <trip-list src="/api/tripcards/"></trip-list>
+      <main class="home">
+        <trip-list src="/api/tripcards/"></trip-list>
 
-      <div class="cta-wrap">
-        <a href="/create.html" class="cta">Create New Trip</a>
-      </div>
-    </main>
+        <div class="cta-wrap">
+          <a href="/create.html" class="cta">Create New Trip</a>
+        </div>
+      </main>
 
-    <script src="/scripts/home.js"></script>
+      <script src="/scripts/home.js"></script>
+    </mu-auth>
   </body>
 </html>
