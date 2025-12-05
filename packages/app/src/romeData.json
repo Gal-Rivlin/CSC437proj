@@ -1,0 +1,32 @@
+[
+  {
+    "date": "December 15, Monday",
+    "location": "Rome",
+    "itinerary": "Land FCO 8pm, go to Airbnb",
+    "bookings": "Airbnb, Flight (LHR - FCO)",
+    "photos": "photospage.html"
+  },
+  {
+    "date": "December 16, Tuesday",
+    "location": "Rome",
+    "itinerary": "Colosseum & Roman Forum, Trastevere in evening",
+    "bookings": "Airbnb (2nd night), Museum tickets"
+  },
+  {
+    "date": "December 17, Wednesday",
+    "location": "Florence",
+    "itinerary": "Train to Florence, Duomo & Piazza della Signoria"
+  },
+  {
+    "date": "December 18, Thursday",
+    "location": "Florence to Venice",
+    "itinerary": "Uffizi AM, afternoon train to Venice, evening walk",
+    "bookings": "Venice Airbnb, Train (Firenze → Venezia)"
+  },
+  {
+    "date": "December 19, Monday",
+    "location": "Venice and flight out",
+    "itinerary": "Morning canals, Rialto; transit to airport",
+    "bookings": "Flight (VCE → …), Water bus tickets"
+  }
+]

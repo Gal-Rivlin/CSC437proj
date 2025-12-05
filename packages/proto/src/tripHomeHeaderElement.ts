@@ -65,8 +65,8 @@ export class TripHomeHeaderElement extends LitElement {
     `;
   }
 
-  renderSignInButton() {
-    return html` <a href="/login.html"> Sign In… </a> `;
+  private renderSignInButton() {
+    return html`<a href="/app/login">Sign In…</a>`;
   }
 
   override render() {

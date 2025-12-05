@@ -1,5 +1,5 @@
 export interface TripCardData {
-  tripID: string;
+  id: string;
   imgSrc: string;
   title: string;
   editHref: string;
@@ -7,10 +7,23 @@ export interface TripCardData {
   deleteHref: string;
 }
 
+export interface TripActivity {
+  name: string;
+  description: string;
+}
+
 export interface TripDayData {
   date?: string;
-  location?: string;
-  itinerary?: string;
-  bookings?: string;
-  photos?: string;
+  location?: string; // overview card fields
+  activities?: TripActivity[]; // per-day activity cards
+}
+
+export interface FullTrip {
+  name: string;
+  id: string;
+  data?: TripDayData[];
+}
+
+export interface HeaderData {
+  name?: string;
 }

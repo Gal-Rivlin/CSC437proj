@@ -26,6 +26,7 @@ var import_mongo = require("./services/mongo");
 var import_tripCardData_svc = __toESM(require("./services/tripCardData-svc"));
 var import_tripcards = __toESM(require("./routes/tripcards"));
 var import_auth = __toESM(require("./routes/auth"));
+var import_fulltrip = __toESM(require("./routes/fulltrip"));
 (0, import_mongo.connect)("traveling");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
@@ -33,6 +34,7 @@ const staticDir = process.env.STATIC || "public";
 app.use(import_express.default.json());
 app.use(import_express.default.static(staticDir));
 app.use("/api/tripcards", import_auth.authenticateUser, import_tripcards.default);
+app.use("/api/fulltrip", import_auth.authenticateUser, import_fulltrip.default);
 app.use("/auth", import_auth.default);
 app.get("/hello", (req, res) => {
   res.send("Hello, World");

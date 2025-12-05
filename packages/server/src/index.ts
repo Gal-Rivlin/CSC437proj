@@ -3,18 +3,22 @@ import { connect } from "./services/mongo";
 import TripCards from "./services/tripCardData-svc";
 import TripCardRouter from "./routes/tripcards";
 import auth, { authenticateUser } from "./routes/auth";
-import path from "path";
+
+import FullTripRouter from "./routes/fulltrip";
 
 connect("traveling");
 
 const app = express();
 const port = process.env.PORT || 3000;
 const staticDir = process.env.STATIC || "public";
-//app.use(express.static(path.resolve(__dirname, "../../proto")));
+
 app.use(express.json());
 app.use(express.static(staticDir));
 
 app.use("/api/tripcards", authenticateUser, TripCardRouter);
+
+app.use("/api/fulltrip", authenticateUser, FullTripRouter);
+
 app.use("/auth", auth);
 
 app.get("/hello", (req: Request, res: Response) => {

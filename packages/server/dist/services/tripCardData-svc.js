@@ -24,7 +24,9 @@ module.exports = __toCommonJS(tripCardData_svc_exports);
 var import_mongoose = require("mongoose");
 const TripCardDataSchema = new import_mongoose.Schema(
   {
-    tripID: { type: String, required: true, trim: true },
+    id: { type: String, required: true, trim: true },
+    // Optional legacy support: if your old docs have tripID, you can add:
+    // tripID: { type: String, trim: true },
     imgSrc: { type: String, required: true, trim: true },
     title: { type: String, required: true, trim: true },
     editHref: { type: String, required: true, trim: true },
@@ -43,8 +45,11 @@ function index() {
   return TripCardDataModel.find().lean().exec();
 }
 function get(tripID) {
-  return TripCardDataModel.find({ tripID }).then((list) => list[0]).catch((err) => {
-    throw `${tripID} Not found`;
+  return TripCardDataModel.findOne({
+    $or: [{ id: tripID }, { tripID }]
+  }).lean().exec().then((doc) => {
+    if (!doc) throw `${tripID} Not found`;
+    return doc;
   });
 }
 function create(json) {
@@ -52,15 +57,23 @@ function create(json) {
   return t.save();
 }
 function update(tripID, tripCard) {
-  return TripCardDataModel.findOneAndUpdate({ tripID }, tripCard, {
-    new: true
-  }).then((updated) => {
+  return TripCardDataModel.findOneAndUpdate(
+    {
+      $or: [{ id: tripID }, { tripID }]
+    },
+    tripCard,
+    {
+      new: true
+    }
+  ).lean().exec().then((updated) => {
     if (!updated) throw `${tripID} not updated`;
-    else return updated;
+    return updated;
   });
 }
 function remove(tripID) {
-  return TripCardDataModel.findOneAndDelete({ tripID }).then((deleted) => {
+  return TripCardDataModel.findOneAndDelete({
+    $or: [{ id: tripID }, { tripID }]
+  }).exec().then((deleted) => {
     if (!deleted) throw `${tripID} not deleted`;
   });
 }
