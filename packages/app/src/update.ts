@@ -178,6 +178,44 @@ export default function update(
         }),
       ];
     }
+    case "trip/rename": {
+      const { id, name } = payload as { id: string; name: string };
+
+      // Find the existing FullTrip for this id (from currentFullTrip or fullTrips)
+      const existingTrip: FullTrip | undefined =
+        (model.currentFullTrip && model.currentFullTrip.id === id
+          ? model.currentFullTrip
+          : model.fullTrips?.find((t) => t.id === id)) || undefined;
+
+      const updatedTrip: FullTrip | undefined = existingTrip
+        ? { ...existingTrip, name }
+        : undefined;
+
+      // Optimistically update fullTrips/currentFullTrip
+      const updatedFullTrips = updatedTrip
+        ? (model.fullTrips || []).map((t) => (t.id === id ? updatedTrip : t))
+        : model.fullTrips;
+
+      // Optimistically update tripCards titles if we have them
+      const updatedTripCards = model.tripCards
+        ? model.tripCards.map((c) => (c.id === id ? { ...c, title: name } : c))
+        : model.tripCards;
+
+      const optimisticModel: Model = {
+        ...model,
+        fullTrips: updatedFullTrips,
+        currentFullTrip: updatedTrip ?? model.currentFullTrip,
+        tripCards: updatedTripCards,
+      };
+
+      return [
+        optimisticModel,
+        renameTrip(id, name, updatedTrip, user).then(() => {
+          // Refresh cards so home view stays in sync
+          return ["tripcards/request", {}] as Msg;
+        }),
+      ];
+    }
 
     case "tripcard/create": {
       const { trip } = payload;
@@ -426,4 +464,66 @@ function deleteTrip(id: string, user: Auth.User): Promise<void> {
   });
 
   return Promise.all([deleteCard, deleteFullTrip]).then(() => undefined);
+}
+
+function renameTrip(
+  id: string,
+  name: string,
+  trip: FullTrip | undefined,
+  user: Auth.User
+): Promise<void> {
+  const tasks: Promise<any>[] = [];
+
+  // Update FullTrip (if we know its full structure)
+  if (trip) {
+    const updatedTrip: FullTrip = { ...trip, name };
+    tasks.push(saveFullTrip(updatedTrip, user));
+  }
+
+  // Update the TripCard title
+  tasks.push(renameTripCard(id, name, user));
+
+  return Promise.all(tasks).then(() => undefined);
+}
+
+function renameTripCard(
+  id: string,
+  name: string,
+  user: Auth.User
+): Promise<void> {
+  // 1) Fetch existing card so we don't blow away other fields
+  return fetch(`/api/tripcards/${id}`, {
+    headers: Auth.headers(user),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        return res.text().then((t) => {
+          throw new Error(t || `Failed to load trip card ${id} for rename`);
+        });
+      }
+      return res.json();
+    })
+    .then((card: any) => {
+      const updatedCard = {
+        ...card,
+        title: name,
+      };
+
+      // 2) PUT updated card back
+      return fetch(`/api/tripcards/${id}`, {
+        method: "PUT",
+        headers: {
+          ...Auth.headers(user),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedCard),
+      });
+    })
+    .then((res) => {
+      if (!res.ok) {
+        return res.text().then((t) => {
+          throw new Error(t || `Failed to rename trip card ${id}`);
+        });
+      }
+    });
 }

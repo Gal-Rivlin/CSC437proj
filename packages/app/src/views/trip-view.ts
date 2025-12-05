@@ -12,7 +12,7 @@ import type { Model } from "../model";
 import type { Msg } from "../messages";
 import type { FullTrip, TripDayData } from "server/models";
 
-type EditKind = "overview" | "activity" | undefined;
+type EditKind = "overview" | "activity" | "tripName" | undefined;
 
 export class TripViewElement extends View<Model, Msg> {
   static styles = [
@@ -26,6 +26,7 @@ export class TripViewElement extends View<Model, Msg> {
   @state() private tripId?: string;
   @state() private localError?: string;
 
+  // editing state
   @state() private editKind: EditKind = undefined;
   @state() private editDayIndex: number = -1;
   @state() private editActivityIndex: number = -1;
@@ -34,6 +35,7 @@ export class TripViewElement extends View<Model, Msg> {
   @state() private editLocation: string = "";
   @state() private editName: string = "";
   @state() private editDescription: string = "";
+  @state() private editTripName: string = "";
 
   constructor() {
     super("traveling:model");
@@ -102,6 +104,7 @@ export class TripViewElement extends View<Model, Msg> {
     return this.trip?.data ?? [];
   }
 
+  // ----- DAYS: ADD / REMOVE -----
   private onAddDay = () => {
     const trip = this.trip;
     if (!trip) return;
@@ -141,6 +144,7 @@ export class TripViewElement extends View<Model, Msg> {
     this.dispatchMessage(["fulltrip/save", { trip: updatedTrip }]);
   };
 
+  // ----- ACTIVITIES: ADD / REMOVE -----
   private onAddActivity = (event: CustomEvent<{ dayIndex: number }>) => {
     const trip = this.trip;
     if (!trip) return;
@@ -205,6 +209,9 @@ export class TripViewElement extends View<Model, Msg> {
     this.dispatchMessage(["fulltrip/save", { trip: updatedTrip }]);
   };
 
+  // ----- EDITING: OPEN MODAL -----
+
+  // click on day overview
   private onEditOverview = (event: CustomEvent<{ dayIndex: number }>) => {
     const trip = this.trip;
     if (!trip) return;
@@ -220,8 +227,10 @@ export class TripViewElement extends View<Model, Msg> {
     this.editLocation = day.location ?? "";
     this.editName = "";
     this.editDescription = "";
+    this.editTripName = "";
   };
 
+  // click on activity card
   private onEditActivity = (
     event: CustomEvent<{ dayIndex: number; activityIndex: number }>
   ) => {
@@ -242,6 +251,22 @@ export class TripViewElement extends View<Model, Msg> {
     this.editLocation = "";
     this.editName = act.name;
     this.editDescription = act.description ?? "";
+    this.editTripName = "";
+  };
+
+  // NEW: click on trip title
+  private onEditTripName = () => {
+    const trip = this.trip;
+    if (!trip) return;
+
+    this.editKind = "tripName";
+    this.editDayIndex = -1;
+    this.editActivityIndex = -1;
+    this.editDate = "";
+    this.editLocation = "";
+    this.editName = "";
+    this.editDescription = "";
+    this.editTripName = trip.name;
   };
 
   private closeEditModal = () => {
@@ -252,11 +277,26 @@ export class TripViewElement extends View<Model, Msg> {
     this.editLocation = "";
     this.editName = "";
     this.editDescription = "";
+    this.editTripName = "";
   };
 
+  // ----- EDITING: SAVE CHANGES -----
   private saveEdit = () => {
     const trip = this.trip;
     if (!trip || this.editKind === undefined) {
+      this.closeEditModal();
+      return;
+    }
+
+    // Special case: renaming the entire trip
+    if (this.editKind === "tripName") {
+      const newName = this.editTripName.trim();
+      if (!newName || newName === trip.name) {
+        this.closeEditModal();
+        return;
+      }
+
+      this.dispatchMessage(["trip/rename", { id: trip.id, name: newName }]);
       this.closeEditModal();
       return;
     }
@@ -269,7 +309,6 @@ export class TripViewElement extends View<Model, Msg> {
     }
 
     const day = existingData[dayIndex];
-
     let updatedDay: TripDayData = { ...day };
 
     if (this.editKind === "overview") {
@@ -310,19 +349,30 @@ export class TripViewElement extends View<Model, Msg> {
     this.closeEditModal();
   };
 
+  // ----- EDIT MODAL RENDER -----
   private renderEditModal() {
     if (!this.editKind) return null;
 
     const isOverview = this.editKind === "overview";
+    const isActivity = this.editKind === "activity";
+    const isTripName = this.editKind === "tripName";
 
     return html`
       <div class="edit-overlay" @click=${this.closeEditModal}>
         <div class="edit-dialog" @click=${(e: Event) => e.stopPropagation()}>
-          <h2>${isOverview ? "Edit day" : "Edit activity"}</h2>
+          <h2>
+            ${isOverview
+              ? "Edit day"
+              : isActivity
+              ? "Edit activity"
+              : "Rename trip"}
+          </h2>
           <p>
             ${isOverview
               ? "Update the date and location for this day."
-              : "Update the name and description for this activity."}
+              : isActivity
+              ? "Update the name and description for this activity."
+              : "Change the name of this trip."}
           </p>
 
           ${isOverview
@@ -348,7 +398,9 @@ export class TripViewElement extends View<Model, Msg> {
                   />
                 </div>
               `
-            : html`
+            : null}
+          ${isActivity
+            ? html`
                 <div class="edit-field">
                   <label for="edit-name">Activity name</label>
                   <input
@@ -370,7 +422,23 @@ export class TripViewElement extends View<Model, Msg> {
                       ).value)}
                   ></textarea>
                 </div>
-              `}
+              `
+            : null}
+          ${isTripName
+            ? html`
+                <div class="edit-field">
+                  <label for="edit-trip-name">Trip name</label>
+                  <input
+                    id="edit-trip-name"
+                    .value=${this.editTripName}
+                    @input=${(e: Event) =>
+                      (this.editTripName = (
+                        e.target as HTMLInputElement
+                      ).value)}
+                  />
+                </div>
+              `
+            : null}
 
           <div class="edit-actions">
             <button class="btn-modal btn-cancel" @click=${this.closeEditModal}>
@@ -419,7 +487,8 @@ export class TripViewElement extends View<Model, Msg> {
     return html`
       <main class="trip-page">
         <header class="trip-header">
-          <h1>${trip.name}</h1>
+          <!-- NEW: click title to rename -->
+          <h1 @click=${this.onEditTripName}>${trip.name}</h1>
           <label class="dark-mode-toggle"></label>
           <a href="/app" class="exit-link">Exit to Menu</a>
         </header>

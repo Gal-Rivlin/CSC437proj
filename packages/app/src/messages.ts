@@ -27,4 +27,5 @@ export type Msg =
   | ["fulltrip/load", { fullTrips: FullTrip[]; id: string }]
   | ["fulltrip/save", { trip: FullTrip }]
   | ["fulltrip/updateLocal", { trip: FullTrip }]
-  | ["trip/delete", { id: string }];
+  | ["trip/delete", { id: string }]
+  | ["trip/rename", { id: string; name: string }];
