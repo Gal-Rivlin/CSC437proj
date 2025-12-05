@@ -22,6 +22,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
+var import_promises = __toESM(require("node:fs/promises"));
+var import_path = __toESM(require("path"));
 var import_mongo = require("./services/mongo");
 var import_tripCardData_svc = __toESM(require("./services/tripCardData-svc"));
 var import_tripcards = __toESM(require("./routes/tripcards"));
@@ -30,7 +32,7 @@ var import_fulltrip = __toESM(require("./routes/fulltrip"));
 (0, import_mongo.connect)("traveling");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
-const staticDir = process.env.STATIC || "public";
+const staticDir = import_path.default.resolve(process.cwd(), process.env.STATIC || "public");
 app.use(import_express.default.json());
 app.use(import_express.default.static(staticDir));
 app.use("/api/tripcards", import_auth.authenticateUser, import_tripcards.default);
@@ -38,6 +40,10 @@ app.use("/api/fulltrip", import_auth.authenticateUser, import_fulltrip.default);
 app.use("/auth", import_auth.default);
 app.get("/hello", (req, res) => {
   res.send("Hello, World");
+});
+app.use("/app", (req, res) => {
+  const indexHtml = import_path.default.resolve(staticDir, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then((html) => res.send(html));
 });
 app.get("/tripcards/:tripID", (req, res) => {
   const { tripID } = req.params;
