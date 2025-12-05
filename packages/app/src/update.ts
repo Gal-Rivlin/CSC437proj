@@ -4,6 +4,8 @@ import { Msg } from "./messages";
 import { Model } from "./model";
 import type { TripCardData, TripDayData, FullTrip } from "server/models";
 
+type Dispatch = (msg: Msg) => void;
+
 export default function update(
   message: Msg,
   model: Model,
@@ -15,11 +17,16 @@ export default function update(
     case "tripcards/request": {
       return [
         model,
-        requestTripCards(user).then((tripcards) => [
-          "tripcards/load",
-          { tripcards },
-        ]),
-      ];
+        (dispatch: Dispatch) => {
+          requestTripCards(user)
+            .then((tripcards) => {
+              dispatch(["tripcards/load", { tripcards }]);
+            })
+            .catch((err) => {
+              console.error("tripcards/request failed:", err);
+            });
+        },
+      ] as unknown as ThenUpdate<Model, Msg>;
     }
 
     case "user/register": {
