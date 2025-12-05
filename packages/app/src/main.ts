@@ -21,10 +21,6 @@ import update from "./update.ts";
 
 const routes = [
   {
-    path: "/app",
-    view: () => html`<home-view></home-view>`,
-  },
-  {
     path: "/app/trip/plan",
     view: () => html`<trip-view></trip-view>`,
   },
@@ -47,6 +43,10 @@ const routes = [
   {
     path: "/app/newuser",
     view: () => html`<newuser-view></newuser-view>`,
+  },
+  {
+    path: "/app",
+    view: () => html`<home-view></home-view>`,
   },
   {
     path: "/",

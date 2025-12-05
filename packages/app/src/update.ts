@@ -2,7 +2,7 @@
 import { Auth, ThenUpdate } from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model } from "./model";
-import { TripCardData, TripDayData, FullTrip } from "server/models";
+import type { TripCardData, TripDayData, FullTrip } from "server/models";
 
 export default function update(
   message: Msg,

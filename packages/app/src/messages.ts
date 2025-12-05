@@ -1,4 +1,4 @@
-import { TripCardData, TripDayData, FullTrip } from "server/models";
+import type { TripCardData, TripDayData, FullTrip } from "server/models";
 
 export type Msg =
   | [
