@@ -24,7 +24,9 @@ export class HomeViewElement extends View<Model, Msg> {
   connectedCallback() {
     super.connectedCallback();
 
-    if (!this.tripcards) {
+    console.log("[HomeView] connected; tripcards =", this.tripcards);
+
+    if (!this.tripcards || this.tripcards.length === 0) {
       this.dispatchMessage(["tripcards/request", {}]);
     }
   }
@@ -39,6 +41,7 @@ export class HomeViewElement extends View<Model, Msg> {
   static styles = [reset.styles, page.styles, homepage.styles];
 
   override render() {
+    console.log("[HomeView] render; tripcards =", this.tripcards);
     return html`
       <main class="home">
         <trip-header></trip-header>
